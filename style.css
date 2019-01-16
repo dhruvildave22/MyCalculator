@@ -1,5 +1,4 @@
 .main{
-	
 	height: auto;
 	width: 290px;
 	border: 2px solid;
@@ -52,6 +51,6 @@ button {
 	height: 50px;	
 }
 
-#equal, #remove, #clear {
+#equal, #delete, #clear {
 	background-color: red !important;
 }
