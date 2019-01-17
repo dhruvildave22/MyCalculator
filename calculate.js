@@ -126,17 +126,74 @@ function number(input){
 function power2() {
 	display = document.getElementById("result");
 	answer = Math.pow(display.value, 2);
+	console.log(answer);
+
+
+
+
+
+
+/*
+
+// local storage
+	const resultList = document.getElementById('result')
+	
+	eventListeners();
+	//Form Submission
+	function eventListeners() {
+		document.querySelector('#form').addEventListener('submit',newStorage);
+	}
+
+
+	function newStorage(e){
+	e.preventDefault();
+
+	//READ THE TEXT AREA
+
+	const result = document.getElementById('result').value;
+
+	////Create an <li> element
+
+	const li = document.createElement('li');
+	li.textContent = result;
+	storageList.appendChild(li);
+
+
+	}
+	
+*/
+
+////the main program starts
 	answer = (answer*1).toString();
 	reset(answer);
+	history();
+
 }
+
+
+
+
+
+
+
+
 
 //Function x^3
 function power3() {
 	display = document.getElementById("result");
 	answer = Math.pow(display.value, 3);
+	console.log(answer);
 	answer = (answer*1).toString();
 	reset(answer);
 }
+
+/*function power2(x) {
+return xx;
+}
+function power3(x) {
+return xsquare(x);
+reset(answer);
+}*/
 
 
 
@@ -147,6 +204,7 @@ function sqrt() {
 	display = document.getElementById("result");
 	answer = Math.sqrt(display.value);
 	answer = (answer*1).toString();
+	console.log(answer);
 	reset(answer);
 }
 
@@ -160,7 +218,8 @@ function factorial() {
 		answer = "Cannot calculate";
 	else 
 		answer = (answer*1).toString();
-	reset(answer);
+		console.log(answer);
+		reset(answer);
 }
 
 
@@ -190,18 +249,25 @@ function equal(){
 	display = document.getElementById("result");
 	if (completed && op!="") {
 		if (op =="^")
+		{
+	
 			answer = Math.pow(initial_val, display.value);
-		else {
+			console.log(answer);
+  		}
+  		else {
 			console.log(initial_val + op + display.value);
 			answer = eval(initial_val + op + display.value);
 			console.log(answer);
 		}
 		reset(answer);
 	}
+
 }
 
+
+
 //Percent
-function percent(){
+/* function percent(){
 	display = document.getElementById("result");
 	if (op != "") {
 		answer = eval(initial_val+"*"+display.value+"/100");
@@ -210,7 +276,7 @@ function percent(){
 		toExp();
 	}
 	
-}
+} */
 
 
 
@@ -269,3 +335,8 @@ function toExp() {
 	if (display.value.length > PREC)
 		display.value = (Number(display.value).toExponential(PREC)*1).toString();	
 }
+
+
+
+
+

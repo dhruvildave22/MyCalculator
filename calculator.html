@@ -3,11 +3,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title> Calculator </title>
+		<script src="jquery-3.3.1.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<script type="text/javascript" src="calculate.js"></script>
 	</head>
 	<body>
-		<div class="main" align="center">
+		<div class="main" align="center" id="form">
 		
 			<div id="screen">
 				<input type="text" id="result" value="0" maxlength="12" />
@@ -42,7 +43,6 @@
 				<button id="mul" class="sci_op"> x </button>
 				<button id="clear" class="sci_op"> C </button>
 				<button id="zero" class="sci_num"> 0 </button>
-				<button id="percent" class="sci_op"> % </button>
 				<button id="div" class="sci_op"> &divide; </button>	
 				
 				<button id="delete" class="sci_op"> &larr; </button> 
@@ -50,9 +50,13 @@
 				
 			</div>
 			
-			
+
 			
 		
 		</div>
+					<div class="storage">
+                    <h2>History</h2>
+                    <div id="result-list"></div>
+                </div>
 	</body>
 </html>
