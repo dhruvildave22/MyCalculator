@@ -11,7 +11,7 @@ function initialize(){
 }
 
 
- // Model : Data storage, input-parse to storage ///
+ /// Model : Data storage, input-parse to storage ///
 
 var Model = function(){
 	this.calcArr = [];
