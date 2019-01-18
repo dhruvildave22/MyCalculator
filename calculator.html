@@ -1,62 +1,84 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title> Calculator </title>
-		<script src="jquery-3.3.1.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<script type="text/javascript" src="calculate.js"></script>
-	</head>
-	<body>
-		<div class="main" align="center" id="form">
-		
-			<div id="screen">
-				<input type="text" id="result" value="0" maxlength="12" />
-			</div>
-			
-			<div id="special_calc">
-			
+<head>
+  <meta charset="utf-8">
+  <title>Calculator</title>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script src="./resources/main.js"></script>
+  <link rel="stylesheet" href="./resources/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="secondary-body">
+      <div class="row">
+        <div class="fun button2">square</div>
+        <div class="fun button2">cube</div>
+      </div>
+      <div class="row">
+        <div class="fun button2">fact:</div>
+        <div class="fun button2">√:</div>
+      </div>
+     <!-- <div class="row">
+        <div class="num button2">π</div>
+        <div class="num button2">E</div>
+      </div> -->
+      <div class="row">
+        <div class="op button2">^</div>
+      <!--  <div class="fun button2">log:</div>-->
+      </div>
+    </div>
+    <div class="calc-body">
+      <div class="calc-row">
+        <div class="display">0</div>
+      </div>
+      <div class="row">
+        <div class="clr button">AC</div>
+        <div class="clr button">C</div>
+        <div class="flip button">+/-</div>
+        <div class="op button">/</div>
+      </div>
+      <div class="row">
+        <div class="num button">7</div>
+        <div class="num button">8</div>
+        <div class="num button">9</div>
+        <div class="op button">x</div>
+      </div>
+      <div class="row">
+        <div class="num button">4</div>
+        <div class="num button">5</div>
+        <div class="num button">6</div>
+        <div class="op button">+</div>
+      </div>
+      <div class="row">
+        <div class="num button">1</div>
+        <div class="num button">2</div>
+        <div class="num button">3</div>
+        <div class="op button">-</div>
+      </div>
+      <div class="row">
+        <div class="ext button"><<</div>
+        <div class="num button">0</div>
+        <div class="dec button">.</div>
+        <div class="calc button">=</div>
+      </div>
+    </div>
 
-				<button id="power2" class="sci_op"> x<sup>2</sup> </button>
-				<button id="power3" class="sci_op"> x<sup>3</sup> </button>
-				<button id="powerY" class="sci_op"> x<sup>y</sup> </button>
-				<button id="sqrt" class="sci_op"> &radic; </button>
-				<button id="factorial" class="sci_op"> n! </button>
-				
-			</div>
-			
-			<div id="basic_calc">
-			
-				<button id="seven" class="sci_num"> 7 </button> 
-				<button id="eight" class="sci_num"> 8 </button> 
-				<button id="nine" class="sci_num"> 9 </button>
-				<button id="add" class="sci_op"> + </button>  					
-				
-				<button id="four" class="sci_num"> 4 </button>
-				<button id="five" class="sci_num"> 5 </button>
-				<button id="six" class="sci_num"> 6 </button>
-				<button id="sub" class="sci_op"> - </button>
-				
-				<button id="one" class="sci_num"> 1 </button>
-				<button id="two" class="sci_num"> 2 </button>
-				<button id="three" class="sci_num"> 3 </button>
-				<button id="mul" class="sci_op"> x </button>
-				<button id="clear" class="sci_op"> C </button>
-				<button id="zero" class="sci_num"> 0 </button>
-				<button id="div" class="sci_op"> &divide; </button>	
-				
-				<button id="delete" class="sci_op"> &larr; </button> 
-				<button id="equal" class="sci_op"> = </button>
-				
-			</div>
-			
+    <div class="history-container">
+      <div class="title-row">History</div>
+      <div class="h-row button"></div>
+      <div class="h-row button"></div>
+      <div class="h-row button"></div>
+      <div class="h-row button"></div>
+      <div class="h-row button"></div>
+      <div class="h-row button"></div>
+      <div class="h-row button"></div>
+    </div>
+    <div id="info-button2">Ans</div>
+  </div>
 
-			
-		
-		</div>
-					<div class="storage">
-                    <h2>History</h2>
-                    <div id="result-list"></div>
-                </div>
-	</body>
+  <div class="modal-curtain">
+
+   
+</body>
 </html>
