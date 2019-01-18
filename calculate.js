@@ -234,348 +234,223 @@ var Model = function(){
   
   
 
-window.onload = function() {
-	var elements = document.body.getElementsByTagName("*");
-	for (var i =0; i < elements.length; i++) {
-		switch (elements[i].id) {
-			case "one": 
-				elements[i].addEventListener("click", function(){ number("1"); });
-				break;
-			case "two": 
-				elements[i].addEventListener("click", function(){ number("2"); });
-				break;
-			case "three": 
-				elements[i].addEventListener("click", function(){ number("3"); });
-				break;
-			case "four": 
-				elements[i].addEventListener("click", function(){ number("4"); });
-				break;
-			case "five": 
-				elements[i].addEventListener("click", function(){ number("5"); });
-				break;
-			case "six": 
-				elements[i].addEventListener("click", function(){ number("6"); });
-				break;
-			case "seven": 
-				elements[i].addEventListener("click", function(){ number("7"); });
-				break;
-			case "eight": 
-				elements[i].addEventListener("click", function(){ number("8"); });
-				break;
-			case "nine": 
-				elements[i].addEventListener("click", function(){ number("9"); });
-				break;
-			case "zero": 
-				elements[i].addEventListener("click", function(){ number("0"); });
-				break;
-				
-			case "power2":
-				elements[i].addEventListener("click", power2);
-				break;
-			case "power3":
-				elements[i].addEventListener("click", power3);
-				break;
-
-			case "sqrt":
-				elements[i].addEventListener("click", sqrt);
-				break;
-			case "factorial":
-				elements[i].addEventListener("click", factorial);
-				break;
-
-			
-			/*case "percent":
-				elements[i].addEventListener("click", percent);	
-				break; */
-			case "add":
-				elements[i].addEventListener("click", function(){ basic("+"); });
-				break;
-			case "sub":
-				elements[i].addEventListener("click", function(){ basic("-"); });
-				break;
-			case "mul":
-				elements[i].addEventListener("click", function(){ basic("*"); });
-				break;
-			case "div":
-				elements[i].addEventListener("click", function(){ basic("/"); });
-				break;
-			case "powerY":
-				elements[i].addEventListener("click", function(){ basic("^"); });
-				break;
-			
-
-
-			case "equal":
-				elements[i].addEventListener("click", equal);
-				break;
-			case "clear":
-				elements[i].addEventListener("click", function() { reset("0");});
-				break;
-			case "delete":
-				elements[i].addEventListener("click", del);
-				break;
-
-			default:
-				break;
-		}
-	}
-	/*  */
-}
-
-function number(input){
-	display = document.getElementById("result");
-	temp = display.value;
-	
-	if (display.value.match(/[a-z]/i))
-		display.value = "0";
-	
-	if (second_num) {
-		display.value = "0";
-		second_num = false;
-	}
-	
-	if (display.value == "0")
-		temp = input;
-	else {
-		if (temp.length < PREC)
-			temp += input;
-	}
-	display.value = temp;
-	completed = true;
-	toExp();
-}
-
-
-
-
-
-
-
-
-
-//Function x^2
-function power2() {
-  document.getElementById("history").innerHTML = localStorage.getItem("answer");
-
-	display = document.getElementById("result");
-	answer = Math.pow(display.value, 2);
-	console.log(answer);
-	answer = (answer*1).toString();
-	reset(answer);
-    	localStorage.setItem("answer", answer);
-	document.getElementById("history").innerHTML = localStorage.getItem("answer");
-
-	
-
-	//const answer = localStorage.getItem("answer");
-
-}
-
-
-
-
-
-
-
-
-
-//Function x^3
-function power3() {
-	display = document.getElementById("result");
-	answer = Math.pow(display.value, 3);
-	console.log(answer);
-	answer = (answer*1).toString();
-	reset(answer);
-	localStorage.setItem("answer", answer);
-	document.getElementById("history").innerHTML = localStorage.getItem("answer");
-
-}
-
-/*function power2(x) {
-return xx;
-}
-function power3(x) {
-return xsquare(x);
-reset(answer);
-}*/
-
-
-
-
-
-//Function sqrt
-function sqrt() {
-	display = document.getElementById("result");
-	answer = Math.sqrt(display.value);
-	answer = (answer*1).toString();
-	console.log(answer);
-	reset(answer);
-	localStorage.setItem("answer", answer);
-	document.getElementById("history").innerHTML = localStorage.getItem("answer");
-
-}
-
-
-
-//Function factorial
-function factorial() {
-	display = document.getElementById("result");
-	answer = fact(display.value);
-	if (answer == 0)
-		answer = "Cannot calculate";
-	else 
-		answer = (answer*1).toString();
-		console.log(answer);
-		reset(answer);
-		localStorage.setItem("answer", answer);
-	 document.getElementById("history").innerHTML = localStorage.getItem("answer");
-
-}
-
-
-
-//Basic operations: +, -, *, /,^
-function basic(operator){	
-	display = document.getElementById("result");
-	if (op == "") {
-		initial_val = display.value;
-		op = operator;
-	}
-	else {
-		if (completed) {
-			equal();
-			initial_val = answer;
-			op = operator;
-		}
-		else
-			op = operator;
-	}
-	completed = false;
-	second_num = true;
-}
-
-//Find result =
-function equal(){
-		if (completed && op!="") {
-		if (op =="^")
-		{
-	
-			answer = Math.pow(initial_val, display.value);
-			console.log(answer);
-			localStorage.setItem("answer", answer);
-			document.getElementById("history").innerHTML = localStorage.getItem("answer");
-
-  		}
-  		else {
-			console.log(initial_val + op + display.value);
-			answer = eval(initial_val + op + display.value);
-			console.log(answer);
-		}
-
-		reset(answer);
-		localStorage.setItem("answer", answer);
-		document.getElementById("history").innerHTML = localStorage.getItem("answer");
-
-	}
-
-
-
-}
-
-
-
-//Percent
-/* function percent(){
-	display = document.getElementById("result");
-	if (op != "") {
-		answer = eval(initial_val+"*"+display.value+"/100");
-		answer = (answer*1).toString();
-		display.value = answer;
-		toExp();
-	}
-	
-} */
-
-
-
-//Delete last input
-function del() {
-	display = document.getElementById("result");
-	if ((display.value.length <= 1) || display.value.match(/[a-z]/i)) {
-		display.value = "0";
-		float_num = false;
-	}
-	else  {
-		if (display.value.substr(display.value.length-1) == ".")
-			float_num = false;
-		display.value = display.value.substr(0, display.value.length-1);		
-	}
-	answer = display.value;
-	toExp();
-}
-
-//Reset display to val and all other properties to initial values
-function reset(val) {
-	//set display value
-	document.getElementById("result").value = val;
-	toExp();
-	//reset all properties
-	initial_val = "";
-	op = "";
-	float_num = false;
-	second_num = false;
-	completed = false;
-}
-
-//Compute factorial of n (n = integer)
-function fact(n) {
-	if (n.toString().indexOf(".") != -1) {
-		console.log("Cannot calculate factorial for float numbers!");
-		return 0;
-	}
-	else {
-		try {
-			if (n == 0)
-				return 1;
-			else
-				return n*fact(n-1);
-		}
-		catch (err) {
-			console.log("Cannot calculate factorial for big numbers!")
-			reset("NaN");
-		}
-	}
-}
-
-//If display value is bigger than PREC digits, we make it in scientific notation
-function toExp() {
-	display = document.getElementById("result");
-	if (display.value.length > PREC)
-		display.value = (Number(display.value).toExponential(PREC)*1).toString();	
-}
-
-
-const resultList = document.getElementById('result')
-function eventListeners() {
-		document.querySelector('#form').addEventListener('result',newStorage);
-	}
-
-
-	function newStorage(e){
-	e.preventDefault();
-
-	//READ THE TEXT AREA
-
-	const result = document.getElementById('result').value;
-
-	////Create an <li> element
-
-	const li = document.createElement('li');
-	li.textContent = result;
-storageList.appendChild(li);
-}
-
-
-
-
-
+ /*------------------------------~~~~----------------------------------*/
+
+
+ // Controller : Click handlers, math processing, op order decisions //
+
+
+ var Controller = function(obj){
+    this.model = obj;
+    this.routeInputClicks = function(){
+      $('.num').on('click',this.model.handleNumClicks.bind(this.model));
+      $('.op').on('click',this.model.handleOpClicks.bind(this.model));
+      $('.dec').on('click',this.model.handleDecClicks.bind(this.model));
+      $('.calc').on('click',this.model.handleCalc.bind(this.model));
+      $('.clr').on('click',this.model.clearCalc.bind(this.model));
+      $('.fun').on('click',this.model.handleFunctions.bind(this.model));
+      $('#info-button2').on('click',this.model.handleHistoryType.bind(this.model));
+      $('.flip').on('click',this.model.handleFlip.bind(this.model));
+      $('body').on('keypress',this.handleKeyInput);
+      $('.ext').on('click',function(event){
+        if ($('.secondary-body').css('visibility') === 'hidden'){
+          $(event.target).text('>>');
+          $('#info-button').css({'visibility':'visible','left':'33px'});
+          $('#info-button2').css({'visibility':'visible','right':'33px'});
+          $('.secondary-body').css({'visibility':'visible','left':'0px'});
+          $('.history-container').css({'visibility':'visible','left':'0px'});
+        } else {
+          $(event.target).text('<<');
+          $('#info-button').css({'visibility':'hidden','left':'233px'});
+          $('#info-button2').css({'visibility':'hidden','right':'233px'});
+          $('.secondary-body').css({'visibility':'hidden','left':'200px'});
+          $('.history-container').css({'visibility':'hidden','left':'-200px'});
+        }
+      });
+
+      $('.h-row.button').dblclick(view.loadFromHistory.bind(view));
+      $('#info-button').click(function(event){
+        $('.modal-curtain').slideDown('slow');
+        $('.modal-body').slideDown('slow');
+      });
+      $('.modal-close').click(function(event){
+        $('.modal-body').slideUp('slow');
+        $('.modal-curtain').slideUp('slow');
+
+      });
+    }
+      //keyboard handler
+    this.handleKeyInput = function(){
+      switch (event.charCode){
+        case 65: // AC - 'A'
+        case 97: // AC - 'a'
+          $('.calc-body .row:nth-child(2) .clr:first-child').click();
+          break;
+        case 67: // C - 'C'
+        case 99: // C - 'c'
+          $('.calc-body .row:nth-child(2) .clr:nth-child(2)').click();
+          break;
+        case 94: // ^
+          $('.secondary-body .row:last-child .op:first-child').click();
+          break;
+        case 47: // /
+          $('.calc-body .row:nth-child(2) .op:nth-child(4)').click();
+          break;
+        case 55: // 7
+          $('.calc-body .row:nth-child(3) .num:first-child').click();
+          break;
+        case 56: // 8
+          $('.calc-body .row:nth-child(3) .num:nth-child(2)').click();
+          break;
+        case 57: // 9
+          $('.calc-body .row:nth-child(3) .num:nth-child(3)').click();
+          break;
+        case 88: // X
+        case 120: // x X *
+        case 42: // x X *
+          $('.calc-body .row:nth-child(3) .op').click();
+          break;
+        case 52: // 4
+          $('.calc-body .row:nth-child(4) .num:first-child').click();
+          break;
+        case 53: // 5
+          $('.calc-body .row:nth-child(4) .num:nth-child(2)').click();
+          break;
+        case 54: // 6
+          $('.calc-body .row:nth-child(4) .num:nth-child(3)').click();
+          break;
+        case 43: // +
+          $('.calc-body .row:nth-child(4) .op').click();
+          break;
+        case 49: // 1
+          $('.calc-body .row:nth-child(5) .num:first-child').click();
+          break;
+        case 50: // 2
+          $('.calc-body .row:nth-child(5) .num:nth-child(2)').click();
+          break;
+        case 51: // 3
+          $('.calc-body .row:nth-child(5) .num:nth-child(3)').click();
+          break;
+        case 45: // -
+          $('.calc-body .row:nth-child(5) .op').click();
+          break;
+        case 102: // +/- - 'f'
+          $('.calc-body .row:nth-child(6) .flip').click();
+          break;
+        case 48: // 0
+          $('.calc-body .row:nth-child(6) .num').click();
+          break;
+        case 46: // .
+          $('.calc-body .row:nth-child(6) .dec').click();
+          break;
+        case 13: // =
+        case 61: // =
+          $('.calc-body .row:nth-child(6) .calc').click();
+          break;
+        case 60:
+        case 62: // expand calc body - < or >
+          $('.calc-body .row:nth-child(6) .ext').click();
+          break;
+        case 115: //square - s
+          $('.secondary-body .row:nth-child(1) .fun:nth-child(1)').click();
+          break;
+        case 100: // cube - c
+          $('.secondary-body .row:nth-child(1) .fun:nth-child(2)').click();
+          break;
+        case 116: //fact - t
+          $('.secondary-body .row:nth-child(2) .fun:nth-child(1)').click();
+          break;
+        case 113: // sqrt - q
+          $('.secondary-body .row:nth-child(2) .fun:nth-child(2)').click();
+          break;
+      //  case 112: //pi - p
+      //    $('.secondary-body .row:nth-child(3) .num:nth-child(1)').click();
+      //    break;
+      //  case 101: // E - e
+      //    $('.secondary-body .row:nth-child(3) .num:nth-child(2)').click();
+      //    break;
+      //  case 108: // log - l
+      //    $('.secondary-body .row:nth-child(4) .fun').click();
+      //    break;
+        case 63: // user info - ?
+          $('#info-button').click();
+          break;
+        case 91: // close user info - [
+          $('.modal-close').click();
+          break;
+        case 104: // toggle hishtory mode - h
+          $('#info-button2').click();
+          break;
+        case 161: // double click top history item - alt-1
+          $('.history-container div:nth-child(2)').dblclick();
+          break;
+      }
+    }
+
+
+    this.checkAddOrSubtract = function(element){
+      return element === '+' || element === '-';
+    }
+
+    this.calcAdd = function(num1,num2){
+      return Number(num1) + Number(num2);
+    }
+
+    this.calcSubtract = function(num1,num2){
+      return num1 - num2;
+    }
+
+    this.calcPower2 = function(num1){
+      return Math.pow(num1,2);
+    }
+
+    this.calcPower3 = function(num1){
+      return Math.pow(num1,3);
+    }
+
+    this.calcFact = function(num1){
+      if(num1 == 0) {
+        return 1;
+    }
+    if(num1 < 0 ) {
+        return undefined;
+    }
+    for(var i = num1; --i; ) {
+        num1 *= i;
+    }
+    return num1;
+    }
+
+    this.calcSqrt = function(num1){
+      return Math.sqrt(num1);
+    }
+
+   // this.calcLog = function(num1){
+   //   return Math.log(num1);
+   // }
+
+    this.calcExponent = function(num1,num2){
+      return Math.pow(num1,num2);
+    }
+
+    this.calcMultiply = function(num1,num2){
+      return num1 * num2;
+    }
+
+    this.calcDivide = function(num1,num2){
+      return num1 / num2;
+    }
+
+
+    this.checkMultiplyOrDivide = function(element){
+      return element === '/' || element === 'x';
+    }
+
+    this.checkAddOrSubtract = function(element){
+      return element === '+' || element === '-';
+    }
+
+    this.checkFunctions = function(element){
+      return element === 'square' || element === 'cube' || element === 'fact:' || element === '√:' || element === 'log:';
+    }
+  }
