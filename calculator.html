@@ -1,14 +1,55 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title> Calculator </title>
-		<script src="jquery-3.3.1.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<script type="text/javascript" src="calculate.js"></script>
-	</head>
-	<body>
+		<meta charset="utf-8">
+		<title>Calculator</title>
+		<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+		<script src="./resources/main.js"></script>
+		<link rel="stylesheet" href="./resources/style.css">
+		<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+	  </head>
+	  <body>
+		<div class="container">
+		  <div class="secondary-body">
+			<div class="row">
+			  <div class="fun button2">square</div>
+			  <div class="fun button2">cube</div>
+			</div>
+			<div class="row">
+			  <div class="fun button2">fact:</div>
+			  <div class="fun button2">√:</div>
+			</div>
+		   <!-- <div class="row">
+			  <div class="num button2">π</div>
+			  <div class="num button2">E</div>
+			</div> -->
+			<div class="row">
+			  <div class="op button2">^</div>
+			<!--  <div class="fun button2">log:</div>-->
+			</div>
+		  </div>
+		  <div class="calc-body">
+			<div class="calc-row">
+			  <div class="display">0</div>
+			</div>
+			<div class="row">
+			  <div class="clr button">AC</div>
+			  <div class="clr button">C</div>
+			  <div class="flip button">+/-</div>
+			  <div class="op button">/</div>
+			</div>
+
+
+
+
+
+
+
+
+			
 		<div class="main" align="center" id="form">
+
+
 		
 			<div id="screen">
 				<input type="text" id="result" value="0" maxlength="12" />
@@ -49,14 +90,27 @@
 				<button id="equal" class="sci_op"> = </button>
 				
 			</div>
-			
 
-			
-		
 		</div>
-					<div class="storage">
-                    <h2>History</h2>
-                    <div id="result-list"></div>
-                </div>
+	<!--<div id ="history">
+    <h1>History</h1>
+  </div>-->
+       <div id="history">
+           <label id="logs">Last 10 operations</label>
+           <table>
+                <tr>
+                    <th>Answer</th>
+
+                </tr>
+                <tr>
+                        <td id="answer"></td>
+
+                </tr>
+           </table>         
+       </div>
+
+
+</div>
+					
 	</body>
 </html>
