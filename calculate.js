@@ -454,3 +454,51 @@ var Model = function(){
       return element === 'square' || element === 'cube' || element === 'fact:' || element === '√:' || element === 'log:';
     }
   }
+   /*-------------------------------~~~~-----------------------------------*/
+
+
+ //// View : Display updating, page history build, load from history ////
+
+
+ var View = function(obj){
+    this.model = obj;
+
+    this.updateDisplay = function(value){
+      $('.display').text(value);
+    }
+
+    this.loadFromHistory = function(event){
+      var item = $(event.target).text();
+      if (item.length > 0){
+        if (this.model.historyType === 'calc'){
+          this.model.calcArr = item.split(' ');
+          this.updateDisplay(item);
+        } else {
+          if (isNaN(this.model.calcArr[this.model.calcArr.length - 1])){
+            this.model.calcArr.push(item);
+          } else {
+            this.model.calcArr[this.model.calcArr.length - 1] = item;
+          }
+          view.updateDisplay(this.model.calcArr.join(' '));
+        }
+      }
+    }
+
+    this.buildCalcHistory = function(){
+      for (var i = 2; i < 9; i++){
+        if (i > this.model.calcHistory.length+1){
+          break;
+        }
+        $('.h-row:nth-child('+i+')').text(this.model.calcHistory[i-2][0]);
+      }
+    }
+
+    this.buildAnswerHistory = function(){
+      for (var i = 2; i < 9; i++){
+        if (i > this.model.calcHistory.length+1){
+          break;
+        }
+        $('.h-row:nth-child('+i+')').text(this.model.calcHistory[i-2][1]);
+      }
+    }
+  }
