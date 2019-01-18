@@ -10,9 +10,8 @@ function initialize(){
   controller.routeInputClicks()
 }
 
-  ///////////////////////////////////////////////////
+
  // Model : Data storage, input-parse to storage ///
-///////////////////////////////////////////////////
 
 var Model = function(){
 	this.calcArr = [];
@@ -168,9 +167,7 @@ var Model = function(){
 		  } else if (this.calcArr[pos] === '√:'){
 			val = controller.calcSqrt(this.calcArr[pos+1]);
 		  } 
-		  //else if (this.calcArr[pos] === 'log:'){
-			//val = controller.calcLog(this.calcArr[pos+1]);
-		//  }
+
 		} else if (this.calcArr.indexOf('^') >= 0){
 		  pos = this.calcArr.indexOf('^');
 		  val = controller.calcExponent(this.calcArr[pos-1],this.calcArr[pos+1]);
@@ -363,16 +360,7 @@ var Model = function(){
         case 113: // sqrt - q
           $('.secondary-body .row:nth-child(2) .fun:nth-child(2)').click();
           break;
-      //  case 112: //pi - p
-      //    $('.secondary-body .row:nth-child(3) .num:nth-child(1)').click();
-      //    break;
-      //  case 101: // E - e
-      //    $('.secondary-body .row:nth-child(3) .num:nth-child(2)').click();
-      //    break;
-      //  case 108: // log - l
-      //    $('.secondary-body .row:nth-child(4) .fun').click();
-      //    break;
-        case 63: // user info - ?
+	    case 63: // user info - ?
           $('#info-button').click();
           break;
         case 91: // close user info - [
@@ -425,11 +413,7 @@ var Model = function(){
       return Math.sqrt(num1);
     }
 
-   // this.calcLog = function(num1){
-   //   return Math.log(num1);
-   // }
-
-    this.calcExponent = function(num1,num2){
+	this.calcExponent = function(num1,num2){
       return Math.pow(num1,num2);
     }
 
@@ -454,10 +438,7 @@ var Model = function(){
       return element === 'square' || element === 'cube' || element === 'fact:' || element === '√:' || element === 'log:';
     }
   }
-   /*-------------------------------~~~~-----------------------------------*/
-
-
- //// View : Display updating, page history build, load from history ////
+//// View : Display updating, page history build, load from history ////
 
 
  var View = function(obj){
