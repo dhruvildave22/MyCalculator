@@ -54,6 +54,183 @@ var Model = function(){
 		currentNum = Math.E;
 		specialNumPressed = true;
 	  }
+	  if (this.calcArr[0]){
+		if (!isNaN(this.calcArr[this.calcArr.length-1]) || this.calcArr[this.calcArr.length-1][this.calcArr[this.calcArr.length-1].length-1] === '.'){
+		  if (specialNumPressed){
+			this.calcArr.push('x');
+			this.calcArr.push(currentNum);
+		  } else {
+			this.calcArr[this.calcArr.length-1] += currentNum;
+		  }
+		} else {
+		  this.calcArr.push(currentNum);
+		}
+	  } else {
+		this.calcArr.push(currentNum);
+	  }
+	  view.updateDisplay(this.calcArr.join(' '));
+	}
+  
+	this.handleFunctions = function(event){
+	  this.calcPressed = false;
+  
+	  if (!isNaN(this.calcArr[this.calcArr.length-1])){
+		this.calcArr[this.calcArr.length-1] = $(event.target).text();
+	  } else {
+		this.calcArr.push($(event.target).text());
+	  }
+	  view.updateDisplay(this.calcArr.join(' '));
+  
+	  this.canDecimal = true;
+	}
+  
+	this.handleFlip = function(event){
+	  if (this.calcArr[0]){
+		  if (!isNaN(this.calcArr[this.calcArr.length-1])){
+			this.calcArr[this.calcArr.length-1] = Number(this.calcArr[this.calcArr.length-1]) * -1;
+		  }
+	  }
+	  view.updateDisplay(this.calcArr.join(' '));
+	}
+  
+  
+	this.handleDecClicks = function(event){
+	  this.calcPressed = false;
+	  if (!isNaN(this.calcArr[this.calcArr.length-1]) && this.canDecimal){
+		this.calcArr[this.calcArr.length-1] += '.';
+		this.canDecimal = false;
+	  } else if (this.canDecimal){
+		this.calcArr.push('0.');
+		this.canDecimal = false;
+	  }
+	  view.updateDisplay(this.calcArr.join(' '));
+	}
+  
+	this.handleHistoryType = function(event){
+	  if (this.historyType === 'calc'){
+		this.historyType = 'ans';
+		$(event.target).text('Ans');
+		view.buildAnswerHistory();
+	  } else {
+		this.historyType = 'calc';
+		$(event.target).text('Calc');
+		view.buildCalcHistory();
+	  }
+	}
+  
+	this.handleCalc = function(){
+	  this.canDecimal = true;
+  
+  
+	  //Allow for repeat = operation
+	  if (!this.calcPressed){
+		this.memory = this.calcArr.slice(this.calcArr.length - 2,this.calcArr.length);
+		if (isNaN(this.memory[this.memory.length-1])){
+		  this.memory = this.memory.reverse();
+		}
+		this.calcPressed = true;
+	  } else {
+		this.calcArr = this.calcArr.concat(this.memory);
+	  }
+  
+	  //Allow for terminal operator
+	  if (isNaN(this.calcArr[this.calcArr.length-1])){
+		this.calcArr = this.calcArr.concat(this.calcArr.slice(0,this.calcArr.length-1));
+	  }
+  
+	  //write to history
+	  if (this.calcArr.length > 0){
+		var historyItem = [this.calcArr.join(' ')]
+		this.calcHistory.unshift(historyItem);
+	  }
+  
+	  return this.runCalc();
+	}
+  
+  
+	this.runCalc = function(){
+	  var pos;
+	  var val;
+	  var func = false;
+  
+	  //begin recursive calculation
+	  if (this.calcArr.length >= 2){
+		if (this.calcArr.findIndex(controller.checkFunctions) >= 0){
+		  func = true;
+		  pos = this.calcArr.slice().reverse().findIndex(controller.checkFunctions);
+		  pos = this.calcArr.length - 1 - pos;
+		  if (this.calcArr[pos] === 'square'){
+			val = controller.calcPower2(this.calcArr[pos+1]);
+		  } else if (this.calcArr[pos] === 'cube'){
+			val = controller.calcPower3(this.calcArr[pos+1]);
+		  } else if (this.calcArr[pos] === 'fact:'){
+			val = controller.calcFact(this.calcArr[pos+1]);
+		  } else if (this.calcArr[pos] === '√:'){
+			val = controller.calcSqrt(this.calcArr[pos+1]);
+		  } 
+		  //else if (this.calcArr[pos] === 'log:'){
+			//val = controller.calcLog(this.calcArr[pos+1]);
+		//  }
+		} else if (this.calcArr.indexOf('^') >= 0){
+		  pos = this.calcArr.indexOf('^');
+		  val = controller.calcExponent(this.calcArr[pos-1],this.calcArr[pos+1]);
+		} else if (this.calcArr.findIndex(controller.checkMultiplyOrDivide) >= 0){
+		  pos = this.calcArr.findIndex(controller.checkMultiplyOrDivide);
+		  if (this.calcArr[pos] === 'x'){
+			val = controller.calcMultiply(this.calcArr[pos-1],this.calcArr[pos+1]);
+		  } else {
+			val = controller.calcDivide(this.calcArr[pos-1],this.calcArr[pos+1]);
+		  }
+		} else if (this.calcArr.findIndex(controller.checkAddOrSubtract) >= 0){
+		  pos = this.calcArr.findIndex(controller.checkAddOrSubtract);
+		  if (this.calcArr[pos] === '+'){
+			val = controller.calcAdd(this.calcArr[pos-1],this.calcArr[pos+1]);
+		  } else {
+			val = controller.calcSubtract(this.calcArr[pos-1],this.calcArr[pos+1]);
+		  }
+		}
+		if (func){
+		  this.calcArr.splice(pos,2,val);
+		} else {
+		  this.calcArr.splice(pos-1,3,val);
+		}
+		return this.runCalc();
+	  } else {
+		//return calculation
+  
+		//check for infinity and rework as ERR
+		if (this.calcArr[0] === Infinity){
+		  this.calcArr[0] = 'ERROR';
+		}
+		this.calcHistory[0].push(this.calcArr[0]);
+		if (this.historyType === 'calc'){
+			view.buildCalcHistory();
+		} else {
+			view.buildAnswerHistory();
+		}
+  
+		view.updateDisplay(this.calcArr[0]);
+		return this.calcArr[0];
+	  }
+	}
+  
+	// clear the screen
+	this.clearCalc = function(event){
+	  this.canDecimal = true;
+	  this.calcPressed = false;
+	  if ($(event.target).text() === 'AC'){
+		this.calcArr = [];
+		view.updateDisplay('0');
+	  } else {
+		this.calcArr.pop();
+		if (this.calcArr.length >= 1) {
+		  view.updateDisplay(this.calcArr.join(' '));
+		} else {
+		  view.updateDisplay('0');
+		}
+	  }
+	}
+  }	  
   
   
 
