@@ -3,6 +3,8 @@ var initial_val = "", op = "", answer ="0";
 var done = true, float_num = false, second_num = false, completed = false ;
 var temp, display;
 
+var history = [];
+
 window.onload = function() {
 	var elements = document.body.getElementsByTagName("*");
 	for (var i =0; i < elements.length; i++) {
@@ -53,9 +55,9 @@ window.onload = function() {
 				break;
 
 			
-			case "percent":
+			/*case "percent":
 				elements[i].addEventListener("click", percent);	
-				break;
+				break; */
 			case "add":
 				elements[i].addEventListener("click", function(){ basic("+"); });
 				break;
@@ -124,49 +126,19 @@ function number(input){
 
 //Function x^2
 function power2() {
+  document.getElementById("history").innerHTML = localStorage.getItem("answer");
+
 	display = document.getElementById("result");
 	answer = Math.pow(display.value, 2);
 	console.log(answer);
-
-
-
-
-
-
-/*
-
-// local storage
-	const resultList = document.getElementById('result')
-	
-	eventListeners();
-	//Form Submission
-	function eventListeners() {
-		document.querySelector('#form').addEventListener('submit',newStorage);
-	}
-
-
-	function newStorage(e){
-	e.preventDefault();
-
-	//READ THE TEXT AREA
-
-	const result = document.getElementById('result').value;
-
-	////Create an <li> element
-
-	const li = document.createElement('li');
-	li.textContent = result;
-	storageList.appendChild(li);
-
-
-	}
-	
-*/
-
-////the main program starts
 	answer = (answer*1).toString();
 	reset(answer);
-	history();
+    	localStorage.setItem("answer", answer);
+	document.getElementById("history").innerHTML = localStorage.getItem("answer");
+
+	
+
+	//const answer = localStorage.getItem("answer");
 
 }
 
@@ -185,6 +157,9 @@ function power3() {
 	console.log(answer);
 	answer = (answer*1).toString();
 	reset(answer);
+	localStorage.setItem("answer", answer);
+	document.getElementById("history").innerHTML = localStorage.getItem("answer");
+
 }
 
 /*function power2(x) {
@@ -206,6 +181,9 @@ function sqrt() {
 	answer = (answer*1).toString();
 	console.log(answer);
 	reset(answer);
+	localStorage.setItem("answer", answer);
+	document.getElementById("history").innerHTML = localStorage.getItem("answer");
+
 }
 
 
@@ -220,11 +198,14 @@ function factorial() {
 		answer = (answer*1).toString();
 		console.log(answer);
 		reset(answer);
+		localStorage.setItem("answer", answer);
+	 document.getElementById("history").innerHTML = localStorage.getItem("answer");
+
 }
 
 
 
-//Basic operations: +, -, *, /
+//Basic operations: +, -, *, /,^
 function basic(operator){	
 	display = document.getElementById("result");
 	if (op == "") {
@@ -246,21 +227,29 @@ function basic(operator){
 
 //Find result =
 function equal(){
-	display = document.getElementById("result");
-	if (completed && op!="") {
+		if (completed && op!="") {
 		if (op =="^")
 		{
 	
 			answer = Math.pow(initial_val, display.value);
 			console.log(answer);
+			localStorage.setItem("answer", answer);
+			document.getElementById("history").innerHTML = localStorage.getItem("answer");
+
   		}
   		else {
 			console.log(initial_val + op + display.value);
 			answer = eval(initial_val + op + display.value);
 			console.log(answer);
 		}
+
 		reset(answer);
+		localStorage.setItem("answer", answer);
+		document.getElementById("history").innerHTML = localStorage.getItem("answer");
+
 	}
+
+
 
 }
 
@@ -334,6 +323,27 @@ function toExp() {
 	display = document.getElementById("result");
 	if (display.value.length > PREC)
 		display.value = (Number(display.value).toExponential(PREC)*1).toString();	
+}
+
+
+const resultList = document.getElementById('result')
+function eventListeners() {
+		document.querySelector('#form').addEventListener('result',newStorage);
+	}
+
+
+	function newStorage(e){
+	e.preventDefault();
+
+	//READ THE TEXT AREA
+
+	const result = document.getElementById('result').value;
+
+	////Create an <li> element
+
+	const li = document.createElement('li');
+	li.textContent = result;
+storageList.appendChild(li);
 }
 
 
