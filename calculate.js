@@ -1,9 +1,61 @@
-const PREC = 12;
-var initial_val = "", op = "", answer ="0";
-var done = true, float_num = false, second_num = false, completed = false ;
-var temp, display;
+$(document).ready(initialize);
+var calc;
+var controller;
+var view;
 
-var history = [];
+function initialize(){
+  calc = new Model();
+  controller = new Controller(calc);
+  view = new View(calc);
+  controller.routeInputClicks()
+}
+
+  ///////////////////////////////////////////////////
+ // Model : Data storage, input-parse to storage ///
+///////////////////////////////////////////////////
+
+var Model = function(){
+	this.calcArr = [];
+	this.memory = [];
+	this.calcHistory = [];
+	this.canDecimal = true;
+	this.calcPressed = false;
+	this.historyType = 'ans';
+  
+	this.handleOpClicks = function(event){
+	  this.calcPressed = false;
+	  if (this.calcArr[0]){
+		if (isNaN(this.calcArr[this.calcArr.length-1]) && this.calcArr[0] !== 'ERROR'){
+			this.calcArr[this.calcArr.length-1] = $(event.target).text();
+		} else if (this.calcArr[0] !== 'ERROR'){
+			this.calcArr[this.calcArr.length-1] = Number(this.calcArr[this.calcArr.length-1]);
+			this.calcArr.push($(event.target).text());
+		}
+		view.updateDisplay(this.calcArr.join(' '));
+	  } else {
+		view.updateDisplay('0');
+	  }
+	  this.canDecimal = true;
+	}
+  
+	this.handleNumClicks = function(event) {
+	  //start new calc if num was pressed after equals without an op first
+	  if (this.calcPressed){
+		this.calcArr = [];
+	  }
+	  this.calcPressed = false;
+  
+	  var specialNumPressed = false;
+	  var currentNum = $(event.target).text();
+	  if (currentNum === 'π'){
+		currentNum = Math.PI;
+		specialNumPressed = true;
+	  } else if (currentNum === 'E'){
+		currentNum = Math.E;
+		specialNumPressed = true;
+	  }
+  
+  
 
 window.onload = function() {
 	var elements = document.body.getElementsByTagName("*");
